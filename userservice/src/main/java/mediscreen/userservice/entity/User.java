@@ -9,7 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-import mediscreen.userservice.dto.UserCreationDto;
+import mediscreen.userservice.dto.UserDto;
 
 @Data
 @Entity
@@ -20,7 +20,7 @@ public class User {
 		super();
 	}
 
-	public User(UserCreationDto dto) {
+	public User(UserDto dto) {
 		super();
 		this.lastName = dto.getLastName();
 		this.firstName = dto.getFirstName();

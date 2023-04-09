@@ -1,4 +1,4 @@
-package mediscreen.userservice.controller;
+package mediscreen.noteapi.controller;
 
 import java.util.List;
 
@@ -11,39 +11,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import mediscreen.userservice.dto.UserDto;
-import mediscreen.userservice.service.UserService;
+import mediscreen.noteapi.dto.NoteDto;
+import mediscreen.noteapi.service.NoteService;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/note")
 @CrossOrigin(value = "http://localhost:3000")
-public class UserController {
+public class NoteController {
 
 	@Autowired
-	private UserService userService;
+	private NoteService noteService;
 
 	@PostMapping(path = "/add")
-	public UserDto addNewUser(@RequestBody UserDto dto) {
-		return userService.addUser(dto);
+	public NoteDto add(@RequestBody NoteDto dto) {
+		return noteService.add(dto);
 	}
 
 	@GetMapping(path = "/get")
-	public String getUser(@RequestParam String firstName, @RequestParam String lastname) {
-		return "done";
+	public NoteDto getUser(@RequestParam String firstName, @RequestParam String lastname) {
+		return noteService.getByFirstNameAndLastName(firstName, lastname);
 	}
 
 	@GetMapping(path = "/all")
-	public List<UserDto> getAllUser() {
-		return userService.getAllUser();
+	public List<NoteDto> getAllUser() {
+		return noteService.getAll();
 	}
 
 	@PostMapping(path = "/update")
-	public void updateUser(@RequestBody UserDto dto) {
-		userService.updateUser(dto);
+	public NoteDto update(@RequestBody NoteDto dto) {
+		return noteService.update(dto);
 	}
 
 	@PostMapping(path = "/delete")
 	public void deleteUser(@RequestParam String firstName, @RequestParam String lastName) {
-		userService.deleteUser(firstName, lastName);
+		noteService.delete(firstName, lastName);
 	}
 }

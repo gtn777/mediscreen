@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import mediscreen.userservice.dto.UserCreationDto;
 import mediscreen.userservice.dto.UserDto;
 import mediscreen.userservice.entity.User;
 import mediscreen.userservice.repository.UserRepository;
@@ -20,7 +19,7 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	public UserDto addUser(UserCreationDto dto) {
+	public UserDto addUser(UserDto dto) {
 		if (doesUserExists(dto.getFirstName(), dto.getLastName())) {
 			throw new EntityExistsException(
 					"User " + dto.getFirstName() + " " + dto.getLastName() + " already exists.");
@@ -33,7 +32,7 @@ public class UserService {
 		return new UserDto(getUserEntityByName(firstName, lastName));
 	}
 
-	public UserDto updateUser(UserCreationDto dto) {
+	public UserDto updateUser(UserDto dto) {
 		User userToUpdate = getUserEntityByName(dto.getFirstName(), dto.getLastName());
 		User userUpDated = new User(dto);
 		userUpDated.setId(userToUpdate.getId());

@@ -1,4 +1,4 @@
-package mediscreen.noteservice.config;
+package mediscreen.noteapi.config;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "mediscreen.noteservice.repository")
+@EnableMongoRepositories(basePackages = "mediscreen.noteapi.repository")
 public class MongoConfig extends AbstractMongoClientConfiguration {
  
     @Override
@@ -33,7 +33,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
  
     @Override
     public Collection<String> getMappingBasePackages() {
-        return Collections.singleton("mediscreen.noteservice");
+        return Collections.singleton("mediscreen.noteapi");
     }
     
 }
