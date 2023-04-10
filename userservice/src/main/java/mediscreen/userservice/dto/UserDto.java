@@ -14,24 +14,24 @@ public class UserDto {
 
 	public UserDto(User u) {
 		super();
-		this.lastName = u.getLastName();
-		this.firstName = u.getFirstName();
-		this.dateOfBirth = u.getDateOfBirth();
-		this.genre = u.getGenre();
-		this.postalAddress = u.getPostalAddress();
-		this.telephone = u.getTelephone();
+		this.family = u.getLastName();
+		this.given = u.getFirstName();
+		this.dob = u.getDateOfBirth();
+		this.sex = u.getGenre();
+		this.address = u.getPostalAddress();
+		this.phone = u.getTelephone();
 	}
 
-	private String lastName;
+	private String family;
 
-	private String firstName;
+	private String given;
 
-	private LocalDate dateOfBirth;
+	private LocalDate dob;
 
-	private String genre;
+	private String sex;
 
-	private String postalAddress;
+	private String address;
 
-	private String telephone;
+	private String phone;
 
 }

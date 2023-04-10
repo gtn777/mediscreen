@@ -20,9 +20,9 @@ public class UserService {
 	UserRepository userRepository;
 
 	public UserDto addUser(UserDto dto) {
-		if (doesUserExists(dto.getFirstName(), dto.getLastName())) {
+		if (doesUserExists(dto.getGiven(), dto.getFamily())) {
 			throw new EntityExistsException(
-					"User " + dto.getFirstName() + " " + dto.getLastName() + " already exists.");
+					"User " + dto.getGiven() + " " + dto.getFamily() + " already exists.");
 		} else {
 			return new UserDto(userRepository.save(new User(dto)));
 		}
@@ -33,7 +33,7 @@ public class UserService {
 	}
 
 	public UserDto updateUser(UserDto dto) {
-		User userToUpdate = getUserEntityByName(dto.getFirstName(), dto.getLastName());
+		User userToUpdate = getUserEntityByName(dto.getGiven(), dto.getFamily());
 		User userUpDated = new User(dto);
 		userUpDated.setId(userToUpdate.getId());
 		return new UserDto(userRepository.save(userUpDated));

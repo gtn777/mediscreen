@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +14,7 @@ import mediscreen.noteapi.dto.NoteDto;
 import mediscreen.noteapi.service.NoteService;
 
 @RestController
-@RequestMapping(path = "/note")
+@RequestMapping(path = "/patHistory")
 @CrossOrigin(value = "http://localhost:3000")
 public class NoteController {
 
@@ -23,27 +22,22 @@ public class NoteController {
 	private NoteService noteService;
 
 	@PostMapping(path = "/add")
-	public NoteDto add(@RequestBody NoteDto dto) {
-		return noteService.add(dto);
-	}
-
-	@GetMapping(path = "/get")
-	public NoteDto getUser(@RequestParam String firstName, @RequestParam String lastname) {
-		return noteService.getByFirstNameAndLastName(firstName, lastname);
+	public NoteDto add(@RequestParam Integer patId, @RequestParam String e) {
+		return noteService.add(patId, e);
 	}
 
 	@GetMapping(path = "/all")
-	public List<NoteDto> getAllUser() {
-		return noteService.getAll();
+	public List<NoteDto> getUser(@RequestParam Integer patId) {
+		return noteService.getAllByPatientId(patId);
 	}
 
 	@PostMapping(path = "/update")
-	public NoteDto update(@RequestBody NoteDto dto) {
-		return noteService.update(dto);
+	public NoteDto update(@RequestParam String id, @RequestParam String note) {
+		return noteService.update(id, note);
 	}
 
 	@PostMapping(path = "/delete")
-	public void deleteUser(@RequestParam String firstName, @RequestParam String lastName) {
-		noteService.delete(firstName, lastName);
+	public void delete(@RequestParam String id) {
+		noteService.delete(id);
 	}
 }

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NoteserviceApplication {
+public class NoteapiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NoteserviceApplication.class, args);
+		SpringApplication.run(NoteapiApplication.class, args);
 	}
 
 //	@Override

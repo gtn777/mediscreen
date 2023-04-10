@@ -22,12 +22,12 @@ public class User {
 
 	public User(UserDto dto) {
 		super();
-		this.lastName = dto.getLastName();
-		this.firstName = dto.getFirstName();
-		this.dateOfBirth = dto.getDateOfBirth();
-		this.genre = dto.getGenre();
-		this.postalAddress = dto.getPostalAddress();
-		this.telephone = dto.getTelephone();
+		this.lastName = dto.getFamily();
+		this.firstName = dto.getGiven();
+		this.dateOfBirth = dto.getDob();
+		this.genre = dto.getSex();
+		this.postalAddress = dto.getAddress();
+		this.telephone = dto.getPhone();
 	}
 
 	@Id

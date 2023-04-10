@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +14,7 @@ import mediscreen.userservice.dto.UserDto;
 import mediscreen.userservice.service.UserService;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/patient")
 @CrossOrigin(value = "http://localhost:3000")
 public class UserController {
 
@@ -23,13 +22,13 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping(path = "/add")
-	public UserDto addNewUser(@RequestBody UserDto dto) {
+	public UserDto addNewUser(UserDto dto) {
 		return userService.addUser(dto);
 	}
 
 	@GetMapping(path = "/get")
-	public String getUser(@RequestParam String firstName, @RequestParam String lastname) {
-		return "done";
+	public UserDto getUser(@RequestParam String given, @RequestParam String family) {
+		return userService.getUserDtoByName(given, family);
 	}
 
 	@GetMapping(path = "/all")
@@ -38,12 +37,12 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/update")
-	public void updateUser(@RequestBody UserDto dto) {
+	public void updateUser(UserDto dto) {
 		userService.updateUser(dto);
 	}
 
 	@PostMapping(path = "/delete")
-	public void deleteUser(@RequestParam String firstName, @RequestParam String lastName) {
-		userService.deleteUser(firstName, lastName);
+	public void deleteUser(@RequestParam String given, @RequestParam String family) {
+		userService.deleteUser(given, family);
 	}
 }
