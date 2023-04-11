@@ -1,7 +1,7 @@
-package mediscreen.reportservice;
+package mediscreen.reportservice.domain;
 
 public enum DiabetesRiskLevel {
-	NONE("Aucun risque"), BORDERLINE("Risque limité"), INDANGER("Danger"), EARLYONSET("Apparition précoce");
+	NONE("None"), BORDERLINE("Borderline"), INDANGER("In danger"), EARLYONSET("Early onset");
 
 	private String levelString;
 

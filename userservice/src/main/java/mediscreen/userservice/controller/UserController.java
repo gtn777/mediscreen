@@ -3,8 +3,10 @@ package mediscreen.userservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,13 +24,23 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping(path = "/add")
-	public UserDto addNewUser(UserDto dto) {
-		return userService.addUser(dto);
+	public ResponseEntity<UserDto> addNewUser(UserDto dto) {
+		return ResponseEntity.ok(userService.addUser(dto));
 	}
 
-	@GetMapping(path = "/get")
-	public UserDto getUser(@RequestParam String given, @RequestParam String family) {
-		return userService.getUserDtoByName(given, family);
+	@GetMapping(path = "/{userId}")
+	public ResponseEntity<UserDto> getUserByUserId(@PathVariable Integer userId) {
+		return ResponseEntity.ok(userService.getUserDtoByUserId(userId));
+	}
+
+	@GetMapping(path = "/name/{family}")
+	public UserDto getUserByGivenAndFamilyName(@RequestParam(required = false) String given,
+			@PathVariable String family) {
+		if (given == null) {
+			return userService.getUserDtoByLastName(family);
+		} else {
+			return userService.getUserDtoByFirstNameAndLastName(given, family);
+		}
 	}
 
 	@GetMapping(path = "/all")
@@ -45,4 +57,5 @@ public class UserController {
 	public void deleteUser(@RequestParam String given, @RequestParam String family) {
 		userService.deleteUser(given, family);
 	}
+
 }
