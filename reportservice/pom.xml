@@ -8,9 +8,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>mediscreen</groupId>
-	<artifactId>reportservice</artifactId>
+	<artifactId>reporting-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>reportservice</name>
+	<name>reporting-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
