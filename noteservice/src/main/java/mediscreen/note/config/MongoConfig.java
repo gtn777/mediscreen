@@ -22,8 +22,8 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     }
  
     @Override
-    public MongoClient mongoClient() {
-        ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/mediscreen");
+	public MongoClient mongoClient() {
+        ConnectionString connectionString = new ConnectionString("mongodb://mediscreenUser:password@localhost:27017/mediscreen?authSource=admin");
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
             .applyConnectionString(connectionString)
             .build();
@@ -33,7 +33,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
  
     @Override
     public Collection<String> getMappingBasePackages() {
-        return Collections.singleton("mediscreen.noteapi");
+        return Collections.singleton("mediscreen.note");
     }
     
 }

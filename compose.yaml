@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  user:
+    build: ./userservice
+    restart: always
+    network_mode: "host"
+  note:
+    build: ./noteservice
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - mongo
+  reporting:
+    build: ./reportservice
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - note
+      - user
+  mongo:
+    image: mongo
+    restart: always
+    network_mode: "host"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mediscreenUser
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: mediscreen

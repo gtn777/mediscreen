@@ -20,7 +20,7 @@ public class DataInit implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		mongoTemplate.dropCollection("notes");
 		mongoTemplate.createCollection("notes");
-
+		
 		List<String> commands = new ArrayList<String>(9);
 		commands.add("curl -d \"patId=1&e=Patient: TestNone Practitioner's notes/recommendations:"
 				+ " Patient states that they are 'feeling terrific' Weight at or below recommended level\" -X POST http://localhost:8082/patHistory/add");

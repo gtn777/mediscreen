@@ -31,7 +31,6 @@ public class DataInitialization implements CommandLineRunner {
 
 			Process process = processBuilder.start();
 
-			// blocked :(
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
 			String line;
