@@ -22,8 +22,8 @@ public class NoteController {
 	private NoteService noteService;
 
 	@PostMapping(path = "/add")
-	public NoteDto add(@RequestParam Integer patId, @RequestParam String e) {
-		return noteService.add(patId, e);
+	public ResponseEntity<NoteDto> add(@RequestParam Integer patId, @RequestParam String e) {
+		return ResponseEntity.ok(noteService.add(patId, e));
 	}
 
 	@GetMapping(path = "/all")
@@ -40,4 +40,5 @@ public class NoteController {
 	public void delete(@RequestParam String id) {
 		noteService.delete(id);
 	}
+	
 }

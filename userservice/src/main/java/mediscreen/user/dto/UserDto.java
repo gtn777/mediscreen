@@ -2,6 +2,8 @@ package mediscreen.user.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import mediscreen.user.entity.User;
 
@@ -14,6 +16,7 @@ public class UserDto {
 
 	public UserDto(User u) {
 		super();
+		this.patId= u.getId();
 		this.family = u.getLastName();
 		this.given = u.getFirstName();
 		this.dob = u.getDateOfBirth();
@@ -22,10 +25,13 @@ public class UserDto {
 		this.phone = u.getTelephone();
 	}
 
+	private int patId;
+	
 	private String family;
 
 	private String given;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dob;
 
 	private String sex;

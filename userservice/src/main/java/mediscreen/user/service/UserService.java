@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityExistsException;
+import mediscreen.user.dto.NewUserDto;
 import mediscreen.user.dto.UserDto;
 import mediscreen.user.entity.User;
+import mediscreen.user.exception.MultipleUserException;
 import mediscreen.user.exception.UnknownUserException;
 import mediscreen.user.repository.UserRepository;
 
@@ -18,12 +20,10 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
 
-
-	public UserDto addUser(UserDto dto) {
+	public UserDto addUser(NewUserDto dto) {
 		if (doesUserExists(dto.getGiven(), dto.getFamily())) {
-			throw new EntityExistsException("User " + dto.getGiven() + " " + dto.getFamily() + " already exists.");
+			throw new EntityExistsException("Patient \"" + dto.getGiven() + " " + dto.getFamily() + "\" already exists in database.");
 		} else {
 			return new UserDto(userRepository.save(new User(dto)));
 		}
@@ -42,7 +42,9 @@ public class UserService {
 	}
 
 	public UserDto updateUser(UserDto dto) {
-		User userToUpdate = getUserEntityByFirstNameAndLastName(dto.getGiven(), dto.getFamily());
+		System.out.println(dto.toString());
+		System.out.println(dto.getAddress());
+		User userToUpdate = this.getUserEntityByUserId(dto.getPatId());
 		User userUpDated = new User(dto);
 		userUpDated.setId(userToUpdate.getId());
 		return new UserDto(userRepository.save(userUpDated));
@@ -56,13 +58,12 @@ public class UserService {
 	public List<UserDto> getAllUser() {
 		Iterable<User> allUsersIterable = userRepository.findAll();
 		return StreamSupport.stream(allUsersIterable.spliterator(), false).map(u -> new UserDto(u)).toList();
-
 	}
 
 	private User getUserEntityByFirstNameAndLastName(String firstName, String lastName) {
 		Optional<User> optionalUser = userRepository.findByFirstNameAndLastName(firstName, lastName);
 		if (optionalUser.isEmpty()) {
-			throw new UnknownUserException("User " + firstName + " " + lastName + " not found.");
+			throw new UnknownUserException("Patient " + firstName + " " + lastName + " not found.");
 		} else {
 			return optionalUser.get();
 		}
@@ -71,7 +72,10 @@ public class UserService {
 	private User getUserEntityByLastName(String lastName) {
 		List<User> userList = userRepository.findAllByLastName(lastName);
 		if (userList.isEmpty()) {
-			throw new UnknownUserException("User with family name " + lastName + " not found.");
+			throw new UnknownUserException("Patient with last name \"" + lastName + "\" not found.");
+		} else if (userList.size() > 1) {
+			throw new MultipleUserException("There are several patient with last name \"" + lastName
+					+ "\", please specify your search by entering a first name.");
 		} else {
 			return userList.get(0);
 		}
@@ -80,7 +84,7 @@ public class UserService {
 	private User getUserEntityByUserId(Integer userId) {
 		Optional<User> optionalUser = userRepository.findById(userId);
 		if (optionalUser.isEmpty()) {
-			throw new UnknownUserException("User with id " + userId + " not found.");
+			throw new UnknownUserException("Patient with id " + userId + " not found.");
 		} else {
 			return optionalUser.get();
 		}
