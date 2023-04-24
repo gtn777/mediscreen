@@ -11,7 +11,6 @@ import jakarta.persistence.EntityExistsException;
 import mediscreen.user.dto.NewUserDto;
 import mediscreen.user.dto.UserDto;
 import mediscreen.user.entity.User;
-import mediscreen.user.exception.MultipleUserException;
 import mediscreen.user.exception.UnknownUserException;
 import mediscreen.user.repository.UserRepository;
 
@@ -29,27 +28,21 @@ public class UserService {
 		}
 	}
 
-	public UserDto getUserDtoByFirstNameAndLastName(String firstName, String lastName) {
-		return new UserDto(this.getUserEntityByFirstNameAndLastName(firstName, lastName));
-	}
-
 	public UserDto getUserDtoByLastName(String lastName) {
 		return new UserDto(this.getUserEntityByLastName(lastName));
 	}
-
+	
 	public UserDto getUserDtoByUserId(Integer userId) {
 		return new UserDto(this.getUserEntityByUserId(userId));
 	}
 
 	public UserDto updateUser(UserDto dto) {
-		System.out.println(dto.toString());
-		System.out.println(dto.getAddress());
 		User userToUpdate = this.getUserEntityByUserId(dto.getPatId());
 		User userUpDated = new User(dto);
 		userUpDated.setId(userToUpdate.getId());
 		return new UserDto(userRepository.save(userUpDated));
 	}
-
+	
 	public void deleteUser(String firstName, String lastName) {
 		User userToDelete = this.getUserEntityByFirstNameAndLastName(firstName, lastName);
 		userRepository.delete(userToDelete);
@@ -73,9 +66,6 @@ public class UserService {
 		List<User> userList = userRepository.findAllByLastName(lastName);
 		if (userList.isEmpty()) {
 			throw new UnknownUserException("Patient with last name \"" + lastName + "\" not found.");
-		} else if (userList.size() > 1) {
-			throw new MultipleUserException("There are several patient with last name \"" + lastName
-					+ "\", please specify your search by entering a first name.");
 		} else {
 			return userList.get(0);
 		}

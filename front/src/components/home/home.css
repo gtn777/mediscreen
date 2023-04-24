@@ -1,0 +1,71 @@
+.home {
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: center;
+   align-items: flex-start;
+}
+
+.create-patient {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 500px;
+   background-color: rgb(145, 145, 240);
+}
+
+.create-patient form {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.create-patient input {
+   margin: 3px;
+   padding: 2px;
+}
+
+.get-patient {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 400px;
+   background-color: rgb(160, 138, 180);
+   padding: 5px;
+}
+
+.get-patient form {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.get-patient * {
+   margin: 3px;
+}
+
+.patient-list {
+   display: flex;
+   flex-flow: column wrap;
+   justify-content: flex-start;
+   align-items: flex-start;
+   width: 400px;
+   background-color: rgb(134, 184, 179);
+}
+
+.patient-list-item {
+   margin: 0;
+   padding: 0;
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: flex-start;
+   align-items: center;
+}
+
+.patient-list-item p {
+   margin: 2px;
+   padding: 2px;
+}

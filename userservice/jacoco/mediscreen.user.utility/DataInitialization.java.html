@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataInitialization.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">user-service</a> &gt; <a href="index.source.html" class="el_package">mediscreen.user.utility</a> &gt; <span class="el_source">DataInitialization.java</span></div><h1>DataInitialization.java</h1><pre class="source lang-java linenums">package mediscreen.user.utility;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+<span class="fc" id="L12">public class DataInitialization implements CommandLineRunner {</span>
+
+	@Override
+	public void run(String... args) throws Exception {
+
+<span class="fc" id="L17">		List&lt;String&gt; commands = new ArrayList&lt;String&gt;(4);</span>
+<span class="fc" id="L18">		commands.add(</span>
+				&quot;curl -d \&quot;family=TestNone&amp;given=Test&amp;dob=1966-12-31&amp;sex=F&amp;address=1 Brookside St&amp;phone=100-222-3333\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L20">		commands.add(</span>
+				&quot;curl -d \&quot;family=TestBorderline&amp;given=Test&amp;dob=1945-06-24&amp;sex=M&amp;address=2 High St&amp;phone=200-333-4444\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L22">		commands.add(</span>
+				&quot;curl -d \&quot;family=TestInDanger&amp;given=Test&amp;dob=2004-06-18&amp;sex=M&amp;address=3 Club Road&amp;phone=300-444-5555\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L24">		commands.add(</span>
+				&quot;curl -d \&quot;family=TestEarlyOnset&amp;given=Test&amp;dob=2002-06-28&amp;sex=F&amp;address=4 Valley Dr&amp;phone=400-555-6666\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L26">		commands.add(</span>
+				&quot;curl -d \&quot;family=Ferguson&amp;given=Lucas&amp;dob=1968-06-22&amp;sex=M&amp;address=2 Warren Street&amp;phone=387-866-1399\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L28">		commands.add(</span>
+				&quot;curl -d \&quot;family=Rees&amp;given=Pippa&amp;dob=1952-09-27&amp;sex=F&amp;address=745 West Valley Farms Drive&amp;phone=628-423-0993\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L30">		commands.add(</span>
+				&quot;curl -d \&quot;family=Arnold&amp;given=Edward&amp;dob=1952-11-11&amp;sex=M&amp;address=599 East Garden Ave&amp;phone=123-727-2779\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L32">		commands.add(</span>
+				&quot;curl -d \&quot;family=Sharp&amp;given=Anthony&amp;dob=1946-11-26&amp;sex=M&amp;address=894 Hall Street&amp;phone=451-761-8383\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L34">		commands.add(</span>
+				&quot;curl -d \&quot;family=Ince&amp;given=Wendy&amp;dob=1958-06-29&amp;sex=F&amp;address=4 Southampton Road&amp;phone=802-911-9975\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L36">		commands.add(</span>
+				&quot;curl -d \&quot;family=Ross&amp;given=Tracey&amp;dob=1949-12-07&amp;sex=F&amp;address=40 Sulphur Springs Dr&amp;phone=131-396-5049\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L38">		commands.add(</span>
+				&quot;curl -d \&quot;family=Wilson&amp;given=Claire&amp;dob=1966-12-31&amp;sex=F&amp;address=12 Cobblestone St&amp;phone=300-452-1091\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L40">		commands.add(</span>
+				&quot;curl -d \&quot;family=Buckland&amp;given=Max&amp;dob=1945-06-24&amp;sex=M&amp;address=193 Vale St&amp;phone=833-534-0864\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L42">		commands.add(</span>
+				&quot;curl -d \&quot;family=Clark&amp;given=Natalie&amp;dob=1964-06-18&amp;sex=F&amp;address=12 Beechwood Road&amp;phone=241-467-9197\&quot; -X POST http://localhost:8081/patient/add&quot;);
+<span class="fc" id="L44">		commands.add(</span>
+				&quot;curl -d \&quot;family=Bailey&amp;given=Piers&amp;dob=1959-06-28&amp;sex=M&amp;address=1202 Bumble Dr&amp;phone=747-815-0557\&quot; -X POST http://localhost:8081/patient/add&quot;);
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		for (String cmd : commands) {</span>
+<span class="fc" id="L48">			ProcessBuilder processBuilder = new ProcessBuilder();</span>
+
+<span class="fc" id="L50">			processBuilder.command(&quot;bash&quot;, &quot;-c&quot;, cmd);</span>
+
+<span class="fc" id="L52">			Process process = processBuilder.start();</span>
+
+<span class="fc" id="L54">			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));</span>
+
+			String line;
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">			while ((line = reader.readLine()) != null) {</span>
+<span class="nc" id="L58">				System.out.println(line);</span>
+			}
+<span class="fc" id="L60">			int exitCode = process.waitFor();</span>
+<span class="fc" id="L61">		}</span>
+<span class="fc" id="L62">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

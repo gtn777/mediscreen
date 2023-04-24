@@ -1,9 +1,12 @@
 package mediscreen.note.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import mediscreen.note.entity.Note;
 
-@Data
+@Getter
+@Setter
 public class NoteDto {
 
 	public NoteDto() {

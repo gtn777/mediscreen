@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoteController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">note-service</a> &gt; <a href="index.source.html" class="el_package">mediscreen.note.controller</a> &gt; <span class="el_source">NoteController.java</span></div><h1>NoteController.java</h1><pre class="source lang-java linenums">package mediscreen.note.controller;
+
+import java.sql.SQLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import mediscreen.note.dto.NoteDto;
+import mediscreen.note.dto.PatientAllNoteDto;
+import mediscreen.note.exception.EntityNotFoundException;
+import mediscreen.note.service.NoteService;
+
+@RestController
+@RequestMapping(path = &quot;/patHistory&quot;)
+@CrossOrigin(value = &quot;http://localhost:3000&quot;)
+<span class="fc" id="L26">public class NoteController {</span>
+
+<span class="fc" id="L28">	private static Logger logger = LoggerFactory.getLogger(NoteController.class);</span>
+
+	@Autowired
+	private NoteService noteService;
+
+	@PostMapping(path = &quot;/add&quot;)
+	public ResponseEntity&lt;NoteDto&gt; add(@RequestParam Integer patId, @RequestParam String e) {
+<span class="fc" id="L35">		return ResponseEntity.ok(noteService.add(patId, e));</span>
+	}
+
+	@GetMapping(path = &quot;/all&quot;)
+	public ResponseEntity&lt;PatientAllNoteDto&gt; getAllByPatIdUser(@RequestParam Integer patId) {
+<span class="fc" id="L40">		return ResponseEntity.ok(noteService.getAllByPatientId(patId));</span>
+	}
+
+	@PostMapping(path = &quot;/update&quot;)
+	public ResponseEntity&lt;NoteDto&gt; update(@RequestParam String id, @RequestParam String note) {
+<span class="fc" id="L45">		return ResponseEntity.ok(noteService.update(id, note));</span>
+	}
+
+	@PostMapping(path = &quot;/delete&quot;)
+	public ResponseEntity&lt;Void&gt; delete(@RequestParam String id) {
+<span class="fc" id="L50">		noteService.delete(id);</span>
+<span class="fc" id="L51">		return ResponseEntity.ok(null);</span>
+	}
+
+	@ExceptionHandler(value = { SQLException.class })
+	public ResponseEntity&lt;String&gt; handleSQLException(SQLException e) {
+<span class="fc" id="L56">		logger.error(e.getMessage());</span>
+<span class="fc" id="L57">		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage() + e.getCause());</span>
+	}
+
+	@ExceptionHandler(value = { EntityNotFoundException.class })
+	public ResponseEntity&lt;String&gt; handleEntityNotFoundException(EntityNotFoundException e) {
+<span class="fc" id="L62">		logger.error(e.getMessage());</span>
+<span class="fc" id="L63">		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage() + e.getCause());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

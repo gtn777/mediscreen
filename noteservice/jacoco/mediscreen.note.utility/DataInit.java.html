@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataInit.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">note-service</a> &gt; <a href="index.source.html" class="el_package">mediscreen.note.utility</a> &gt; <span class="el_source">DataInit.java</span></div><h1>DataInit.java</h1><pre class="source lang-java linenums">package mediscreen.note.utility;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+<span class="fc" id="L14">public class DataInit implements CommandLineRunner {</span>
+
+	@Autowired
+	MongoTemplate mongoTemplate;
+
+	@Override
+	public void run(String... args) throws Exception {
+<span class="fc" id="L21">		mongoTemplate.dropCollection(&quot;notes&quot;);</span>
+<span class="fc" id="L22">		mongoTemplate.createCollection(&quot;notes&quot;);</span>
+		
+<span class="fc" id="L24">		List&lt;String&gt; commands = new ArrayList&lt;String&gt;(9);</span>
+<span class="fc" id="L25">		commands.add(&quot;curl -d \&quot;patId=1&amp;e=Patient: TestNone Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they are 'feeling terrific' Weight at or below recommended level\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L27">		commands.add(&quot;curl -d \&quot;patId=2&amp;e=Patient: TestBorderline Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they are feeling a great deal of stress at work Patient also complains that their hearing seems Abnormal as of late\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L29">		commands.add(&quot;curl -d \&quot;patId=2&amp;e=Patient: TestBorderline Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they have had a Reaction to medication within last 3 months Patient also complains that their hearing continues to be problematic\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L31">		commands.add(&quot;curl -d \&quot;patId=3&amp;e=Patient: TestInDanger Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they are short term Smoker \&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L33">		commands.add(&quot;curl -d \&quot;patId=3&amp;e=Patient: TestInDanger Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they quit within last year Patient also complains that of Abnormal breathing spells Lab reports Cholesterol LDL high\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L35">		commands.add(&quot;curl -d \&quot;patId=4&amp;e=Patient: TestEarlyOnset Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that walking up stairs has become difficult Patient also complains that they are having shortness of breath Lab results indicate Antibodies present elevated Reaction to medication\&quot; -X POST http://localhost:8082/patHistory/add &quot;);
+<span class="fc" id="L37">		commands.add(&quot;curl -d \&quot;patId=4&amp;e=Patient: TestEarlyOnset Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they are experiencing back pain when seated for a long time\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L39">		commands.add(&quot;curl -d \&quot;patId=4&amp;e=Patient: TestEarlyOnset Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that they are a short term Smoker Hemoglobin A1C above recommended level\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+<span class="fc" id="L41">		commands.add(&quot;curl -d \&quot;patId=4&amp;e=Patient: TestEarlyOnset Practitioner's notes/recommendations:&quot;</span>
+				+ &quot; Patient states that Body Height, Body Weight, Cholesterol, Dizziness and Reaction\&quot; -X POST http://localhost:8082/patHistory/add&quot;);
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		for (String cmd : commands) {</span>
+<span class="fc" id="L45">			ProcessBuilder processBuilder = new ProcessBuilder();</span>
+
+<span class="fc" id="L47">			processBuilder.command(&quot;bash&quot;, &quot;-c&quot;, cmd);</span>
+
+<span class="fc" id="L49">			Process process = processBuilder.start();</span>
+
+			// blocked :(
+<span class="fc" id="L52">			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));</span>
+
+			String line;
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">			while ((line = reader.readLine()) != null) {</span>
+<span class="nc" id="L56">				System.out.println(line);</span>
+			}
+<span class="fc" id="L58">			int exitCode = process.waitFor();</span>
+<span class="fc" id="L59">			System.out.println(&quot;\nExited with error code : &quot; + exitCode);</span>
+<span class="fc" id="L60">		}</span>
+
+<span class="fc" id="L62">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

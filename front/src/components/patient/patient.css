@@ -1,60 +1,20 @@
 .patient {
    display: flex;
    flex-direction: row;
-   justify-content: flex-start;
+   justify-content: center;
    align-items: flex-start;
    flex-wrap: wrap;
 }
-
-.create-patient {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 500px;
-   background-color: rgb(145, 145, 240);
+.patient div {
+   margin: 20px;
 }
-
-.create-patient form {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-}
-
-.create-patient input {
-   margin: 3px;
-   padding: 2px;
-}
-
-.get-patient {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 400px;
-   background-color: rgb(160, 138, 180);
-   padding: 5px;
-}
-
-.get-patient form {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-}
-
-.get-patient * {
-   margin: 3px;
-}
-
 .update-patient {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
    width: 400px;
-   background-color: rgb(238, 240, 145);
+   background-color: rgb(196, 196, 255);
 }
 
 .update-patient form {
@@ -77,7 +37,7 @@
 
 .delete-patient {
    width: 150px;
-   background-color: red;
+   background-color: rgb(204, 133, 133);
 }
 
 .delete-patient button {
@@ -85,57 +45,15 @@
    padding: 5px;
 }
 
-.patient-list {
-   display: flex;
-   flex-flow: column wrap;
-   justify-content: flex-start;
-   align-items: flex-start;
-   width: 400px;
-   background-color: rgb(198, 198, 219);
-}
-
-.patient-list-item {
-   display: flex;
-   flex-flow: row wrap;
-   justify-content: flex-start;
-   align-items: center;
-   margin: 0px;
-}
-
-.patient-list-item p {
-   margin: 0px;
-   padding: 4px;
-}
 
 .patient-info-details {
    width: 300px;
    margin: 2px;
    padding: 5px;
-   background-color: rgb(51, 75, 68);
+   background-color: rgb(150, 196, 255);
 }
 
 .patient-info-details p {
    margin: 3px;
    padding: 3px;
-   background-color: rgb(81, 117, 108);
-}
-
-.note-history{
-   display: flex;
-   flex-flow: column wrap;
-   justify-content: flex-start;
-   align-items: flex-start;
-   width: 400px;
-   background-color: rgb(92, 139, 110);
-}
-
-p, h1, h2, h3, h4, h5, h6 {
-   border: none;
-   margin: 2px;
-   padding: 2px;
-}
-
-div {
-   margin: 4px;
-   padding: 4px;
 }

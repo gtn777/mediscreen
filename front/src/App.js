@@ -1,19 +1,29 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import './App.css';
-import './index.css';
-import PatientList from './components/PatientList';
+import { Route, NavLink, Routes } from "react-router-dom";
 import Patient from './components/patient/Patient';
+import Home from './components/home/Home';
+import Note from './components/note/Note';
+import './index.css';
 
 
 function App() {
-  console.info("-App 1");
+  const [patient, setPatient] = useState({
+    family: "_empty"
+  });
+
   return (
-    <div className="App">
-      {console.info("-App 2")}
+    <div className="app" >
+      <nav  id="sidebar">
+        <h1>Mediscreen</h1>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/patient">Patient</NavLink>
+        <NavLink to="/note">History</NavLink>
+      </nav>
       <Routes>
-        <Route path="/home" element={<Patient />} />
-        <Route path="/" element={<Patient />} />
+        <Route path="/patient" element={<Patient patient={patient} setPatient={setPatient} />} />
+        <Route path="/note" element={<Note patient={patient} />} />
+        <Route path="/home" element={<Home setPatient={setPatient} />} />
+        <Route path="/" element={<Home setPatient={setPatient} />} />
       </Routes>
     </div>
   );

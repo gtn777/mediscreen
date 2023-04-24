@@ -1,15 +1,17 @@
 import axios from 'axios';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DeletePatient = (props) => {
-
    const patient = props.patient;
+   const naviguate = useNavigate();
 
-   const handleClickDeletePatient = () => {      
+   const handleClickDeletePatient = () => {
       const userData = { family: patient.family, given: patient.given };
       axios.post("http://localhost:8081/patient/delete", null, { params: userData })
          .then((response) => {
             console.log(response);
+            naviguate("/home");
          })
          .catch((err, response) => {
             window.alert("Error deleting patient: " + err.response.data);

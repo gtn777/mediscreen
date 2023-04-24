@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoteService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">note-service</a> &gt; <a href="index.source.html" class="el_package">mediscreen.note.service</a> &gt; <span class="el_source">NoteService.java</span></div><h1>NoteService.java</h1><pre class="source lang-java linenums">package mediscreen.note.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import mediscreen.note.dto.NoteDto;
+import mediscreen.note.dto.PatientAllNoteDto;
+import mediscreen.note.entity.Note;
+import mediscreen.note.exception.EntityNotFoundException;
+import mediscreen.note.repository.NoteRepository;
+
+@Service
+<span class="fc" id="L15">public class NoteService {</span>
+
+	@Autowired
+	NoteRepository noteRepository;
+
+	public NoteDto add(Integer patId, String note) {
+<span class="fc" id="L21">		return new NoteDto(noteRepository.save(new Note(patId, note)));</span>
+	}
+
+	public PatientAllNoteDto getAllByPatientId(Integer patId) {
+<span class="fc" id="L25">		PatientAllNoteDto dto = new PatientAllNoteDto();</span>
+<span class="fc" id="L26">		dto.setNoteDtos(noteRepository.findAllByPatId(patId).stream().map(note -&gt; new NoteDto(note)).toList());</span>
+<span class="fc" id="L27">		return dto;</span>
+	}
+
+	public NoteDto update(String id, String note) {
+<span class="fc" id="L31">		Note noteToUpdate = this.getEntityById(id);</span>
+<span class="fc" id="L32">		noteToUpdate.setNote(note);</span>
+<span class="fc" id="L33">		return new NoteDto(noteRepository.save(noteToUpdate));</span>
+	}
+
+	public void delete(String id) {
+<span class="fc" id="L37">		noteRepository.delete(this.getEntityById(id));</span>
+<span class="fc" id="L38">	}</span>
+
+	private Note getEntityById(String id) {
+<span class="fc" id="L41">		Optional&lt;Note&gt; optionalNote = noteRepository.findById(id);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		if (optionalNote.isEmpty()) {</span>
+<span class="fc" id="L43">			throw new EntityNotFoundException(&quot;Note with id &quot; + id.toString() + &quot; does not exist.&quot;);</span>
+		} else {
+<span class="fc" id="L45">			return optionalNote.get();</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

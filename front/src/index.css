@@ -12,15 +12,80 @@ code {
     monospace;
 }
 
-body, html, #root, .App {
+body, html, #root, .app {
   margin: 0;
   padding: 0;
   border: none;
+  background-color: rgb(104, 104, 104);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+div {
+  margin: 4px;
+  padding: 4px;
+}
+
+nav {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+  margin: 20px 0px;
+  background-color: rgb(196, 196, 255);
+}
+
+nav h1 {
+  width: 260px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-right: 10%;
+  background-color: rgb(196, 196, 255);
+}
+
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 150px;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 1.3em;
+  background-color: rgb(150, 196, 255);
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+#sidebar a.active{
+  background-color: rgb(145, 179, 185);
+  color: black;
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  background-color: rgb(43, 57, 75);
+  color: rgb(198, 199, 202);
 }
 
 
-/* *{
-  margin: 5px;
-  padding: 5px;
-  border: 2px solid rgb(207, 25, 25);
-} */
+
+
+

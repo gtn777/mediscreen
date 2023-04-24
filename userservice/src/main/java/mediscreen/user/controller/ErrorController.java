@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.persistence.EntityExistsException;
-import mediscreen.user.exception.MultipleUserException;
 import mediscreen.user.exception.UnknownUserException;
 
 @ControllerAdvice
@@ -24,22 +23,16 @@ public class ErrorController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
 
-	@ExceptionHandler(value = { MultipleUserException.class })
-	public ResponseEntity<String> handleMultipleUserException(Exception e) {
-		logger.error(e.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-	}
-
 	@ExceptionHandler(value = { EntityExistsException.class })
 	public ResponseEntity<String> handleEntityExistsExceptiony(Exception e) {
 		logger.error(e.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 	}
 
 	@ExceptionHandler(value = { SQLException.class })
 	public ResponseEntity<String> handleSQLException(SQLException e) {
 		logger.error(e.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()+e.getCause());
 	}
 
 }

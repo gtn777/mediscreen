@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiabetesService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">reporting-service</a> &gt; <a href="index.source.html" class="el_package">mediscreen.reporting.service</a> &gt; <span class="el_source">DiabetesService.java</span></div><h1>DiabetesService.java</h1><pre class="source lang-java linenums">package mediscreen.reporting.service;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Arrays;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import mediscreen.reporting.domain.DiabetesRiskLevel;
+import mediscreen.reporting.domain.NoteDto;
+import mediscreen.reporting.domain.PatientDto;
+
+@Service
+<span class="fc" id="L18">public class DiabetesService {</span>
+
+	@Autowired
+	PatientService patientService;
+
+	@Autowired
+	HistoryService historyService;
+
+	@Autowired
+	ModelMapper modelMapper;
+
+<span class="fc" id="L29">	static final List&lt;String&gt; triggers = Arrays.asList(&quot;Hémoglobine A1C&quot;, &quot;Hemoglobin A1C&quot;, &quot;Microalbumine&quot;,</span>
+			&quot;Microalbumin&quot;, &quot;Taille&quot;, &quot;Height&quot;, &quot;Poids&quot;, &quot;Weight&quot;, &quot;Fume&quot;, &quot;smoke&quot;, &quot;Abnormal&quot;, &quot;Anormal&quot;,
+			&quot;Cholestérol&quot;, &quot;Cholesterol&quot;, &quot;Vertige&quot;, &quot;Dizziness&quot;, &quot;Rechute&quot;, &quot;relapse&quot;, &quot;Réaction&quot;, &quot;Reaction&quot;,
+			&quot;Anticorps&quot;, &quot;antibodies&quot;);
+
+	public String getAssessmentByPatId(Integer patId) {
+<span class="fc" id="L35">		PatientDto patientDto = patientService.getPatientDtoByPatId(patId);</span>
+<span class="fc" id="L36">		List&lt;NoteDto&gt; noteDtos = historyService.getPatientAllNoteDtoByPatId(patId).getNoteDtos();</span>
+<span class="fc" id="L37">		return this.getAssessmentReport(patientDto, noteDtos);</span>
+	};
+
+	public String getAssessmentByFamilyName(String familyName) {
+<span class="fc" id="L41">		PatientDto patientDto = patientService.getPatientDtoByFamilyName(familyName);</span>
+<span class="fc" id="L42">		List&lt;NoteDto&gt; noteDtos = historyService.getPatientAllNoteDtoByPatId(patientDto.getPatId()).getNoteDtos();</span>
+<span class="fc" id="L43">		return this.getAssessmentReport(patientDto, noteDtos);</span>
+	};
+
+	private String getAssessmentReport(PatientDto patientDto, List&lt;NoteDto&gt; noteDtos) {
+<span class="fc" id="L47">		String sex = patientDto.getSex();</span>
+<span class="fc" id="L48">		Integer age = this.calculateAge(patientDto.getDob(), LocalDate.now());</span>
+<span class="fc" id="L49">		Integer triggerOccurence = this.getTriggerOccurence(noteDtos);</span>
+<span class="fc" id="L50">		DiabetesRiskLevel level = this.getDiabeteRiskLevel(age, triggerOccurence, sex);</span>
+<span class="fc" id="L51">		System.out.println(&quot;--------------&quot; + &quot;Patient: &quot; + patientDto.getGiven() + &quot; &quot; + patientDto.getFamily()</span>
+<span class="fc" id="L52">				+ &quot; (age &quot; + age + &quot;) diabetes assessment is: &quot; + level.getLevelString());</span>
+<span class="fc" id="L53">		return &quot;Patient: &quot; + patientDto.getGiven() + &quot; &quot; + patientDto.getFamily() + &quot; (age &quot; + age</span>
+<span class="fc" id="L54">				+ &quot;) diabetes assessment is: &quot; + level.getLevelString();</span>
+	}
+
+	private DiabetesRiskLevel getDiabeteRiskLevel(Integer age, Integer triggerOccurence, String sex) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (age &lt; 30) {</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (sex.equals(&quot;M&quot;)) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">				if (triggerOccurence &lt; 3) {</span>
+<span class="fc" id="L61">					return DiabetesRiskLevel.NONE;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">				} else if (triggerOccurence &lt; 5) {</span>
+<span class="fc" id="L63">					return DiabetesRiskLevel.INDANGER;</span>
+				} else {
+<span class="fc" id="L65">					return DiabetesRiskLevel.EARLYONSET;</span>
+				}
+			} else {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">				if (triggerOccurence &lt; 4) {</span>
+<span class="fc" id="L69">					return DiabetesRiskLevel.NONE;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">				} else if (triggerOccurence &lt; 7) {</span>
+<span class="fc" id="L71">					return DiabetesRiskLevel.INDANGER;</span>
+				} else {
+<span class="fc" id="L73">					return DiabetesRiskLevel.EARLYONSET;</span>
+				}
+			}
+		} else {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (triggerOccurence &lt; 2) {</span>
+<span class="fc" id="L78">				return DiabetesRiskLevel.NONE;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			} else if (triggerOccurence &lt; 6) {</span>
+<span class="fc" id="L80">				return DiabetesRiskLevel.BORDERLINE;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			} else if (triggerOccurence &lt; 8) {</span>
+<span class="fc" id="L82">				return DiabetesRiskLevel.INDANGER;</span>
+			} else {
+<span class="fc" id="L84">				return DiabetesRiskLevel.EARLYONSET;</span>
+			}
+		}
+	};
+
+	private Integer getTriggerOccurence(List&lt;NoteDto&gt; noteDtos) {
+<span class="fc" id="L90">		Integer result = 0;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (NoteDto n : noteDtos) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			for (String trigger : triggers) {</span>
+<span class="fc" id="L93">				result = result + StringUtils.countOccurrencesOf(n.getNote().toUpperCase(), trigger.toUpperCase());</span>
+<span class="fc" id="L94">			}</span>
+<span class="fc" id="L95">		}</span>
+<span class="fc" id="L96">		return result;</span>
+	};
+
+	private int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+<span class="fc" id="L100">		return Period.between(birthDate, currentDate).getYears();</span>
+	};
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

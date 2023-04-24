@@ -43,7 +43,7 @@ public class DataInitialization implements CommandLineRunner {
 				"curl -d \"family=Clark&given=Natalie&dob=1964-06-18&sex=F&address=12 Beechwood Road&phone=241-467-9197\" -X POST http://localhost:8081/patient/add");
 		commands.add(
 				"curl -d \"family=Bailey&given=Piers&dob=1959-06-28&sex=M&address=1202 Bumble Dr&phone=747-815-0557\" -X POST http://localhost:8081/patient/add");
-	
+
 		for (String cmd : commands) {
 			ProcessBuilder processBuilder = new ProcessBuilder();
 
@@ -58,9 +58,6 @@ public class DataInitialization implements CommandLineRunner {
 				System.out.println(line);
 			}
 			int exitCode = process.waitFor();
-			System.out.println("\nExited with error code : " + exitCode);
 		}
-
 	}
-
 }

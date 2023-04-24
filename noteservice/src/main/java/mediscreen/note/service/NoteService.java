@@ -34,7 +34,7 @@ public class NoteService {
 	}
 
 	public void delete(String id) {
-		noteRepository.delete(getEntityById(id));
+		noteRepository.delete(this.getEntityById(id));
 	}
 
 	private Note getEntityById(String id) {

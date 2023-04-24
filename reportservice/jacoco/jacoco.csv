@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+reporting-service,mediscreen.reporting.config,MapperConfig,0,14,0,0,0,4,0,2,0,2
+reporting-service,mediscreen.reporting.controller,DiabetesController,0,15,0,0,0,3,0,3,0,3
+reporting-service,mediscreen.reporting,ReportingApplication,5,7,0,0,2,2,1,2,1,2
+reporting-service,mediscreen.reporting.domain,PatientDto,0,3,0,0,0,2,0,1,0,1
+reporting-service,mediscreen.reporting.domain,DiabetesRiskLevel,0,42,0,0,0,6,0,3,0,3
+reporting-service,mediscreen.reporting.domain,PatientAllNoteDto,0,8,0,0,0,3,0,1,0,1
+reporting-service,mediscreen.reporting.domain,NoteDto,0,3,0,0,0,2,0,1,0,1
+reporting-service,mediscreen.reporting.service,PatientService,30,3,0,0,3,1,2,1,2,1
+reporting-service,mediscreen.reporting.service,HistoryService,22,3,0,0,4,1,1,1,1,1
+reporting-service,mediscreen.reporting.service,DiabetesService,0,268,0,22,0,43,0,19,0,8

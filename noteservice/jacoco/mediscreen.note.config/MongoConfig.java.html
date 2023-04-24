@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MongoConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">note-service</a> &gt; <a href="index.source.html" class="el_package">mediscreen.note.config</a> &gt; <span class="el_source">MongoConfig.java</span></div><h1>MongoConfig.java</h1><pre class="source lang-java linenums">package mediscreen.note.config;
+
+import java.util.Collection;
+import java.util.Collections;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
+@Configuration
+@EnableMongoRepositories(basePackages = &quot;mediscreen.note.repository&quot;)
+<span class="fc" id="L17">public class MongoConfig extends AbstractMongoClientConfiguration {</span>
+ 
+    @Override
+    protected String getDatabaseName() {
+<span class="fc" id="L21">        return &quot;mediscreen&quot;;</span>
+    }
+ 
+    @Override
+	public MongoClient mongoClient() {
+<span class="fc" id="L26">        ConnectionString connectionString = new ConnectionString(&quot;mongodb://mediscreenUser:password@localhost:27017/mediscreen?authSource=admin&quot;);</span>
+<span class="fc" id="L27">        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()</span>
+<span class="fc" id="L28">            .applyConnectionString(connectionString)</span>
+<span class="fc" id="L29">            .build();</span>
+        
+<span class="fc" id="L31">        return MongoClients.create(mongoClientSettings);</span>
+    }
+ 
+    @Override
+    public Collection&lt;String&gt; getMappingBasePackages() {
+<span class="fc" id="L36">        return Collections.singleton(&quot;mediscreen.note&quot;);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

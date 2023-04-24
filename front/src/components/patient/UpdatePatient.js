@@ -1,11 +1,8 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import './patient.css';
 
-
 const UpdatePatient = (props) => {
-
    const setPatient = props.setPatient;
    const patient = props.patient;
    const [state, setState] = useState({
@@ -25,17 +22,16 @@ const UpdatePatient = (props) => {
       else if (userData.sex !== "M" && userData.sex !== "F") window.alert("Gender must be selected")
       else if (userData.dob < 8) window.alert("Date of birth must be entried.")
       else {
-         console.log(userData);
          axios.post("http://localhost:8081/patient/update", null,{ params: userData })
             .then((response) => {
+               console.log(response.data);
                setPatient(response.data);
             })
-            .catch((err, response) => {
-               window.alert("Error updating patient: " + err.response.data);
+            .catch((err) => {
+               window.alert("Error updating patient: " + err);
             });
       };
    };
-
 
    return (
       <div className="update-patient" >
@@ -106,13 +102,10 @@ const UpdatePatient = (props) => {
                   onChange={handleChange}
                />
             </label>
-
             <button type="submit">Send</button>
          </form>
       </div>
    )
-
-
 };
 
 export default UpdatePatient;

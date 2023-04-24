@@ -26,7 +26,6 @@ public class HistoryService {
 				PatientAllNoteDto.class);
 
 		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
 
 		PatientAllNoteDto dto = modelMapper.map(result.getBody(), PatientAllNoteDto.class);
 

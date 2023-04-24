@@ -31,18 +31,13 @@ public class UserController {
 
 	@GetMapping(path = "/{userId}")
 	public ResponseEntity<UserDto> getUserByUserId(@PathVariable Integer userId) {
-		return ResponseEntity.ok(userService.getUserDtoByUserId(userId));
+		UserDto dto = userService.getUserDtoByUserId(userId);
+		return ResponseEntity.ok(dto);
 	}
 
 	@GetMapping(path = "/name/{family}")
-	public ResponseEntity<UserDto> getUserByGivenAndFamilyName(@RequestParam(required = false) String given,
-			@PathVariable String family) {
-			System.out.println(given);
-		if (given.length() < 1) {
-			return ResponseEntity.ok(userService.getUserDtoByLastName(family));
-		} else {
-			return ResponseEntity.ok(userService.getUserDtoByFirstNameAndLastName(given, family));
-		}
+	public ResponseEntity<UserDto> getUserByGivenAndFamilyName(@PathVariable String family) {
+			return ResponseEntity.ok(userService.getUserDtoByLastName(family));		
 	}
 
 	@PostMapping(path = "/update")
@@ -51,8 +46,9 @@ public class UserController {
 	}
 
 	@PostMapping(path = "/delete")
-	public void deleteUser(@RequestParam String given, @RequestParam String family) {
+	public ResponseEntity<Void> deleteUser(@RequestParam String given, @RequestParam String family) {
 		userService.deleteUser(given, family);
+		return ResponseEntity.ok(null);
 	}
 
 	@GetMapping(path = "/all")
