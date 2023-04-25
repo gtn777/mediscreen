@@ -36,7 +36,7 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/name/{family}")
-	public ResponseEntity<UserDto> getUserByGivenAndFamilyName(@PathVariable String family) {
+	public ResponseEntity<UserDto> getUserByFamilyName(@PathVariable String family) {
 			return ResponseEntity.ok(userService.getUserDtoByLastName(family));		
 	}
 

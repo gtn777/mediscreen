@@ -51,8 +51,8 @@ public class NoteController {
 		return ResponseEntity.ok(null);
 	}
 
-	@ExceptionHandler(value = { SQLException.class })
-	public ResponseEntity<String> handleSQLException(SQLException e) {
+	@ExceptionHandler(value = { Exception.class })
+	public ResponseEntity<String> handleException(Exception e) {
 		logger.error(e.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage() + e.getCause());
 	}
